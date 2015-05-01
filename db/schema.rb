@@ -11,7 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 20150330080312) do
+=======
+ActiveRecord::Schema.define(version: 20150429054417) do
+>>>>>>> c4f7baa413cff998de2cab4a4c64070039e4a20f
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,7 +38,10 @@ ActiveRecord::Schema.define(version: 20150330080312) do
 
   create_table "message_logs", force: true do |t|
     t.integer  "subscriber_id"
+<<<<<<< HEAD
     t.string   "msisdn",             limit: 8
+=======
+>>>>>>> c4f7baa413cff998de2cab4a4c64070039e4a20f
     t.integer  "profile_id"
     t.integer  "period_id"
     t.integer  "sms_transaction_id"
@@ -43,6 +50,10 @@ ActiveRecord::Schema.define(version: 20150330080312) do
     t.datetime "updated_at"
     t.string   "status",             limit: 200
     t.string   "message_id",         limit: 200
+<<<<<<< HEAD
+=======
+    t.string   "msisdn"
+>>>>>>> c4f7baa413cff998de2cab4a4c64070039e4a20f
   end
 
   add_index "message_logs", ["period_id"], name: "index_message_logs_on_period_id", using: :btree
@@ -99,7 +110,10 @@ ActiveRecord::Schema.define(version: 20150330080312) do
 
   create_table "subscribers", force: true do |t|
     t.string   "name",                     limit: 100
+<<<<<<< HEAD
     t.string   "msisdn",                   limit: 8
+=======
+>>>>>>> c4f7baa413cff998de2cab4a4c64070039e4a20f
     t.integer  "profile_id"
     t.integer  "period_id"
     t.datetime "last_registration_date"
@@ -109,9 +123,15 @@ ActiveRecord::Schema.define(version: 20150330080312) do
     t.boolean  "published"
     t.datetime "created_at"
     t.datetime "updated_at"
+<<<<<<< HEAD
   end
 
   add_index "subscribers", ["msisdn"], name: "index_subscribers_on_msisdn", using: :btree
+=======
+    t.string   "msisdn"
+  end
+
+>>>>>>> c4f7baa413cff998de2cab4a4c64070039e4a20f
   add_index "subscribers", ["period_id"], name: "index_subscribers_on_period_id", using: :btree
   add_index "subscribers", ["profile_id"], name: "index_subscribers_on_profile_id", using: :btree
 

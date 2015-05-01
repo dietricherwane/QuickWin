@@ -50,7 +50,11 @@
           <div class="formRow">
             <label><%= label_tag(:custom_number, "Numéro") %></label>
             <div class="formRight">
+<<<<<<< HEAD
               <%= text_field_tag "post[custom_number]", (params[:post][:custom_number] rescue nil), placeholder: "01020304" %>
+=======
+              <%= text_field_tag "post[custom_number]", (params[:post][:custom_number] rescue nil), placeholder: "22501020304" %>
+>>>>>>> c4f7baa413cff998de2cab4a4c64070039e4a20f
               <span class="formNote">A remplir si vous avez choisi le profil: Numéro unique</span>
             </div>
             <div class="clear"></div>

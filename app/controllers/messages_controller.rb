@@ -122,7 +122,11 @@ class MessagesController < ApplicationController
       @spreadsheet.each do |row|
         msisdn = row[0].to_s
         unless not_a_number?(msisdn) or msisdn.length < 11
+<<<<<<< HEAD
           send_message_request(msisdn[-10,11])
+=======
+          send_message_request(msisdn[-11,11])
+>>>>>>> c4f7baa413cff998de2cab4a4c64070039e4a20f
         end
       end
       @transaction.update_attributes(ended_at: DateTime.now, send_messages: @sent_messages, failed_messages: @failed_messages, number_of_messages: (@sent_messages + @failed_messages))
@@ -130,11 +134,19 @@ class MessagesController < ApplicationController
         ActiveRecord::Base.connection.close
       end
     end
+<<<<<<< HEAD
     if (@sent_messages + @failed_messages) == 0
       @error_message << "Le fichier ne contenait aucun numéro valide.<br />"
     else
       @success_message = messages!("Les messages ont été envoyés. Veuillez consulter l'état de l'envoi dans la liste des tansactions.", "success")
     end
+=======
+    #if (@sent_messages + @failed_messages) == 0
+      #@error_message << "Le fichier ne contenait aucun numéro valide.<br />"
+    #else
+      @success_message = messages!("Veuillez consulter l'état de l'envoi dans la liste des tansactions.", "success")
+    #end
+>>>>>>> c4f7baa413cff998de2cab4a4c64070039e4a20f
   end
 
   def send_message_job(subscribers)
