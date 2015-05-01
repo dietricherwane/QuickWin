@@ -1,0 +1,47 @@
+<thead>
+  <tr>
+    <td>Nom</td>
+    <td>MSISDN</td>
+    <td>Profil</td>
+    <td>Période</td>
+    <td>Date d'enregistrement</td>
+    <td>Date d'expiration</td>
+    <td>Nombre d'enregistrements</td>
+    <td>Nombre de messages reçus</td>
+  </tr>
+</thead>
+
+<tbody>
+  <% unless @subscribers.blank? %>
+    <% @subscribers.each do |subscriber| %>
+      <tr>
+        <% status = ((subscriber.last_registration_date + subscriber.last_registration_period.day) < DateTime.now ? 'taskD' : 'taskPr') %>
+        <td class = "<%= status %>">
+          <%= subscriber.name %>
+        </td>
+        <td>
+          <%= subscriber.msisdn %>
+        </td>
+        <td>
+          <%= subscriber.profile.name %>
+        </td>
+        <td>
+          <%= subscriber.last_registration_period %> Jour<%= subscriber.last_registration_period > 1 ? "s" : "" %>
+        </td>
+        <td>
+          <%= subscriber.last_registration_date.strftime("%d-%m-%Y") + " à " + subscriber.last_registration_date.strftime("%Hh %Mmn") %>
+        </td>
+        <td>
+          <% expiration_date = (subscriber.last_registration_date + subscriber.last_registration_period.day) %>
+          <%= expiration_date.strftime("%d-%m-%Y") + " à " + expiration_date.strftime("%Hh %Mmn") %>
+        </td>
+        <td>
+          <%= subscriber.registrations_times.to_i %>
+        </td>
+        <td>
+          <%= subscriber.received_messages.to_i %>
+        </td>
+      </tr>
+    <% end %>
+  <% end %>
+</tbody>

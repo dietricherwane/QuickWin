@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  subscriber_id: 1
+  msisdn: MyString
+  profile_id: 1
+  period_id: 1
+  message: MyText
+
+two:
+  subscriber_id: 1
+  msisdn: MyString
+  profile_id: 1
+  period_id: 1
+  message: MyText

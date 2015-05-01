@@ -1,0 +1,40 @@
+<!-- Title area -->
+<div class="titleArea">
+    <div class="wrapper">
+        <div class="pageTitle">
+            <h5>Liste des abonnés au quarté</h5>
+            <span>Nombre de personnes abonnées au quarté: <b><%= @subscribers_count %></b></span>
+        </div>
+
+        <div class="clear"></div>
+    </div>
+</div>
+
+<div class="line"></div>
+
+<%= render "subscribers/shared/sub_menu" %>
+
+<div class="line"></div>
+
+<!-- Main content wrapper -->
+<div class="wrapper">
+  <div class="widget">
+    <div class="title"><img src="<%= asset_path 'icons/dark/full2.png' %>" alt="" class="titleIcon" /><h6>Liste des abonnés au quarté</h6></div>
+    <table cellpadding="0" cellspacing="0" border="0" class="sTable taskWidget" width = "100%">
+
+      <%= render "subscribers/shared/subscribers_list", subscribers: @subscribers %>
+
+      <tfoot>
+        <tr>
+          <td colspan="8">
+            <div class="tPagination">
+              <%= paginate @subscribers, :params => {:controller => :subscribers, :action => :quarte} %>
+            </div>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
+</div>
+<!-- End Main content wrapper -->
