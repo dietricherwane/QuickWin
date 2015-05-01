@@ -1,0 +1,83 @@
+
+<!-- Title area -->
+<div class="titleArea">
+    <div class="wrapper">
+        <div class="pageTitle">
+            <h5>Messages</h5>
+            <span>Interface d'envoi de messages aux différentes catégories</span>
+        </div>
+
+        <div class="clear"></div>
+    </div>
+</div>
+
+<div class="line"></div>
+
+<%= render "messages/shared/sub_menu" %>
+
+<div class="line"></div>
+
+<!-- Main content wrapper -->
+<div class="wrapper">
+  <div class="nNote nInformation hideit">
+    <p>
+      <strong>Tiercé: </strong>Envoyer un message aux abonnés actifs ayant le profil tiercé.<br />
+      <strong>Quarté: </strong>Envoyer un message aux abonnés actifs ayant le profil quarté.<br />
+      <strong>Quinté: </strong>Envoyer un message aux abonnés actifs ayant le profil quinté.<br />
+      <strong>Nouveaux inscrits: </strong>Envoyer un message aux abonnés n'ayant reçu aucun message.<br />
+      <strong>Participants en cours: </strong>Envoyer un message aux abonnés dont la période d'abonnement est en cours.<br />
+      <strong>Participants non actifs: </strong>Envoyer un message aux abonnés dont la période d'abonnement a expiré.<br />
+      <strong>Numéro unique: </strong>Envoyer un message à un seul numéro.<br />
+      <strong>Liste de numéros: </strong>Envoyer un message à une liste de numéros au format csv.
+    </p>
+  </div>
+
+  <%= @error_message %>
+  <%= @success_message %>
+
+  <%= form_tag send_message_path, multipart: true do %>
+    <fieldset>
+      <div class="widget">
+        <div class="title"><img src="<%= asset_path 'icons/dark/users.png' %>" alt="" class="titleIcon" /><h6>Envoyer un message à une catégorie d'abonnés</h6></div>
+
+          <div class="formRow">
+            <label><%= label_tag(:profile_id, "Profil") %></label>
+            <div class="formRight">
+              <%= collection_select(:post, :profile_id, @profiles, :id, :name, options ={prompt: "-Veuillez choisir un profil-", selected: (params[:post][:profile_id] rescue nil)}, html_options = {class: "selector"}) %>
+            </div>
+            <div class="clear"></div>
+          </div>
+          <div class="formRow">
+            <label><%= label_tag(:custom_number, "Numéro") %></label>
+            <div class="formRight">
+              <%= text_field_tag "post[custom_number]", (params[:post][:custom_number] rescue nil), placeholder: "01020304" %>
+              <span class="formNote">A remplir si vous avez choisi le profil: Numéro unique</span>
+            </div>
+            <div class="clear"></div>
+          </div>
+          <div class="formRow">
+            <label><%= label_tag(:subscribers_file, "Fichier d'abonnés") %></label>
+            <div class="formRight">
+              <%= file_field_tag 'post[subscribers_file]' %>
+              <span class="formNote">A remplir si vous avez choisi le profil: Liste de numéros</span>
+            </div>
+            <div class="clear"></div>
+          </div>
+          <div class="formRow">
+            <label><%= label_tag(:message, "Message") %></label>
+            <div class="formRight">
+              <%= text_area_tag "post[message]", (params[:post][:message] rescue nil), placeholder: "Veuillez entrer le contenu du message", rows: 8 %>
+            </div>
+            <div class="clear"></div>
+          </div>
+
+          <div class="formRow">
+            <%= submit_tag 'Envoyer', class: 'basic' %>
+          </div>
+      </div>
+    </fieldset>
+  <% end %>
+
+
+</div>
+<!-- End Main content wrapper -->

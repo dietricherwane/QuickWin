@@ -1,0 +1,47 @@
+<!-- Title area -->
+<div class="titleArea">
+    <div class="wrapper">
+        <div class="pageTitle">
+            <h5>Charger une liste d'abonnés</h5>
+            <span>Charger une liste excel contenant des abonnés du tiercé, du quarté ou du quinté</b></span>
+        </div>
+
+        <div class="clear"></div>
+    </div>
+</div>
+
+<div class="line"></div>
+
+<%= render "subscribers/shared/sub_menu" %>
+
+<div class="line"></div>
+
+<!-- Main content wrapper -->
+<div class="wrapper">
+
+  <%= @error_message %>
+  <%= @success_message %>
+
+  <%= form_tag subscribers_load_excel_list_path, multipart: true do %>
+    <fieldset>
+      <div class="widget">
+        <div class="title"><img src="<%= asset_path 'icons/dark/full2.png' %>" alt="" class="titleIcon" /><h6>Charger une liste d'abonnés</h6></div>
+
+        <div class="formRow">
+          <label><%= label_tag(:subscribers_file, "Fichier d'abonnés") %></label>
+          <div class="formRight">
+            <%= file_field_tag 'subscribers_file', accept: 'application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' %>
+            <span class="formNote">Veuillez choisir un fichier excel contenant la liste des abonnés à insérer</span>
+          </div>
+          <div class="clear"></div>
+        </div>
+
+        <div class="formRow">
+          <%= submit_tag 'Envoyer', class: 'basic' %>
+        </div>
+
+      </div>
+    </fieldset>
+  <% end %>
+</div>
+<!-- End Main content wrapper -->
