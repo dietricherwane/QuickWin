@@ -1,0 +1,79 @@
+<!-- Title area -->
+<div class="titleArea">
+    <div class="wrapper">
+        <div class="pageTitle">
+          <h5>Termes de recherche:</h5>
+          <span>Numéro: <b><%= @msisdn %></b></span><br />
+          <span>Date de début: <b><%= @begin_date %></b></span><br />
+          <span>Date de fin: <b><%= @end_date %></b></span><br />
+          <% if @message_logs_count %>
+            <span>Nombre de messages: <b><%= @message_logs_count %></b></span>
+          <% else %>
+            <span>Nombre de transactions: <b><%= @transaction_logs_count %></b></span>
+          <% end %>
+        </div>
+
+        <div class="clear"></div>
+    </div>
+</div>
+
+<div class="line"></div>
+
+<%= render "search/shared/sub_menu" %>
+
+<div class="line"></div>
+
+<!-- Main content wrapper -->
+<div class="wrapper">
+  <div class="nNote nInformation hideit">
+    <p>
+      <strong>1701: </strong>Succès de l'envoi.<br />
+      <strong>1702: </strong>URL invalide.<br />
+      <strong>1703: </strong>Combinaison login/mot de passe invalide.<br />
+      <strong>1704: </strong>Type de message invalide.<br />
+      <strong>1705: </strong>Message invalide.<br />
+      <strong>1706: </strong>Numéro du destinataire invalide.<br />
+      <strong>1707: </strong>Emetteur du message non valide.<br />
+      <strong>1710: </strong>Erreur interne.<br />
+      <strong>1025: </strong>Crédit insuffisant.<br />
+      <strong>1715: </strong>Erreur de timeout.<br />
+  </div>
+  <div class="widget">
+    <% if !@message_logs.blank? %>
+      <div class="title"><img src="<%= asset_path 'icons/dark/full2.png' %>" alt="" class="titleIcon" /><h6>Liste des messages</h6></div>
+      <table cellpadding="0" cellspacing="0" border="0" class="sTable taskWidget" width = "100%">
+
+        <%= render "search/shared/message_logs_list", message_logs: @message_logs %>
+
+        <tfoot>
+          <tr>
+            <td colspan="8">
+              <div class="tPagination">
+                <%= paginate @message_logs, :params => {:controller => :search, :action => :perform} %>
+              </div>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  <% else %>
+    <div class="title"><img src="<%= asset_path 'icons/dark/full2.png' %>" alt="" class="titleIcon" /><h6>Liste des transactions</h6></div>
+      <table cellpadding="0" cellspacing="0" border="0" class="sTable taskWidget" width = "100%">
+
+        <%= render "search/shared/transactions_list", transactions: @transaction_logs %>
+
+        <tfoot>
+          <tr>
+            <td colspan="8">
+              <div class="tPagination">
+                <%= paginate @transaction_logs, :params => {:controller => :search, :action => :perform} %>
+              </div>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  <% end %>
+
+</div>
+<!-- End Main content wrapper -->

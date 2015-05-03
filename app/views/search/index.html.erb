@@ -1,0 +1,69 @@
+
+<!-- Title area -->
+<div class="titleArea">
+    <div class="wrapper">
+        <div class="pageTitle">
+            <h5>Recherches</h5>
+            <span>Interface de recherche d'abonnés et de transactions</span>
+        </div>
+
+        <div class="clear"></div>
+    </div>
+</div>
+
+<div class="line"></div>
+
+<%= render "search/shared/sub_menu" %>
+
+<div class="line"></div>
+
+<!-- Main content wrapper -->
+<div class="wrapper">
+  <div class="nNote nInformation hideit">
+    <p>
+      <strong>Renseignez un numéro pour avoir la liste des messages envoyés à ce numéro.</strong><br />
+      <strong>Renseignez une période pour avoir la liste des transactions envoyées durant cette période.</strong><br />
+      <strong>Renseignez un numéro et une période pour avoir la liste des messages envoyés à ce numéro durant cette période.</strong>
+    </p>
+  </div>
+
+  <%= @error_message %>
+  <%= @success_message %>
+
+  <%= form_tag perform_search_path, method: :post do %>
+
+    <div class="widget">
+      <div class="title"><img src="<%= asset_path 'icons/dark/users.png' %>" alt="" class="titleIcon" /><h6>Formulaire de recherche</h6></div>
+
+        <div class="formRow">
+          <%= label_tag(:msisdn, "MSISDN") %>
+          <div class="formRight">
+            <%= text_field_tag "msisdn", (params[:msisdn] rescue nil), placeholder: "Veuillez entrer un numéro de téléphone" %>
+          </div>
+          <div class="clear"></div>
+        </div>
+        <div class="formRow">
+          <%= label_tag(:begin_date, "Date de début") %>
+          <div class="formRight">
+              <input type="text" class="datepicker"name = "begin_date" />
+          </div>
+          <div class="clear"></div>
+        </div>
+        <div class="formRow">
+          <%= label_tag(:end_date, "Date de fin") %>
+          <div class="formRight">
+              <input type="text" class="datepicker"name = "end_date" />
+          </div>
+          <div class="clear"></div>
+        </div>
+
+        <div class="formRow">
+          <%= submit_tag 'Rechercher', class: 'basic' %>
+        </div>
+    </div>
+
+  <% end %>
+
+
+</div>
+<!-- End Main content wrapper -->

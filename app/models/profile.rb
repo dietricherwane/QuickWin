@@ -18,4 +18,13 @@ class Profile < ActiveRecord::Base
   # Validations
   validates :name, presence: true
   validates :name, uniqueness: true
+
+  # Custom functions
+  def self.pmu_profile_id
+    where(name: "PMU").first.id rescue nil
+  end
+
+  def self.loto_bonheur_profile_id
+    where(name: "LOTO BONHEUR").first.id rescue nil
+  end
 end

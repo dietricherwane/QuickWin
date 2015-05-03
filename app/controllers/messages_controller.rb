@@ -45,23 +45,25 @@ class MessagesController < ApplicationController
   end
 
   def deliver_messages
-    if @profile.name == "Tiercé"
-      @subscribers = Subscriber.where("profile_id = 3 AND last_registration_date > TIMESTAMP '#{DateTime.now}' -  INTERVAL ' 1 day' * last_registration_period")
-      set_transaction("Envoi de message aux abonnés du Tiercé.", @subscribers.count)
+    if @profile.name == "PMU"
+      @subscribers = Subscriber.where("profile_id = #{Profile.pmu_profile_id} AND last_registration_date > TIMESTAMP '#{DateTime.now}' -  INTERVAL ' 1 day' * last_registration_period")
+      set_transaction("Envoi de message aux abonnés du PMU.", @subscribers.count)
       deliver_generic_message
     end
 
-    if @profile.name == "Quarté"
-      @subscribers = Subscriber.where("profile_id = 2 AND last_registration_date > TIMESTAMP '#{DateTime.now}' -  INTERVAL ' 1 day' * last_registration_period")
-      set_transaction("Envoi de message aux abonnés du Quarté.", @subscribers.count)
+    if @profile.name == "LOTO BONHEUR"
+      @subscribers = Subscriber.where("profile_id = #{Profile.loto_bonheur_profile_id} AND last_registration_date > TIMESTAMP '#{DateTime.now}' -  INTERVAL ' 1 day' * last_registration_period")
+      set_transaction("Envoi de message aux abonnés du LOTO BONHEUR.", @subscribers.count)
       deliver_generic_message
     end
 
+=begin
     if @profile.name == "Quinté"
       @subscribers = Subscriber.where("profile_id = 1 AND last_registration_date > TIMESTAMP '#{DateTime.now}' -  INTERVAL ' 1 day' * last_registration_period")
       set_transaction("Envoi de message aux abonnés du Quinté.", @subscribers.count)
       deliver_generic_message
     end
+=end
 
     if @profile.name == "Nouveaux inscrits"
       @subscribers = Subscriber.where("received_messages = NULL or received_messages = 0")
@@ -99,7 +101,7 @@ class MessagesController < ApplicationController
     @transaction = SmsTransaction.create(started_at: DateTime.now, profile_id: @profile.id, description: description, number_of_messages: subscribers_count)
   end
 
-  # Handle message delivery for: Tiercé, Quarté, Quinté, Nouveaux inscrits, Clients actifs, clients non actifs
+  # Handle message delivery for: PMU, LOTO BONHEUR, Nouveaux inscrits, Clients actifs, clients non actifs
   def deliver_generic_message
     unless @subscribers.blank?
 
@@ -122,11 +124,7 @@ class MessagesController < ApplicationController
       @spreadsheet.each do |row|
         msisdn = row[0].to_s
         unless not_a_number?(msisdn) or msisdn.length < 11
-<<<<<<< HEAD
-          send_message_request(msisdn[-10,11])
-=======
           send_message_request(msisdn[-11,11])
->>>>>>> c4f7baa413cff998de2cab4a4c64070039e4a20f
         end
       end
       @transaction.update_attributes(ended_at: DateTime.now, send_messages: @sent_messages, failed_messages: @failed_messages, number_of_messages: (@sent_messages + @failed_messages))
@@ -134,19 +132,11 @@ class MessagesController < ApplicationController
         ActiveRecord::Base.connection.close
       end
     end
-<<<<<<< HEAD
-    if (@sent_messages + @failed_messages) == 0
-      @error_message << "Le fichier ne contenait aucun numéro valide.<br />"
-    else
-      @success_message = messages!("Les messages ont été envoyés. Veuillez consulter l'état de l'envoi dans la liste des tansactions.", "success")
-    end
-=======
     #if (@sent_messages + @failed_messages) == 0
       #@error_message << "Le fichier ne contenait aucun numéro valide.<br />"
     #else
       @success_message = messages!("Veuillez consulter l'état de l'envoi dans la liste des tansactions.", "success")
     #end
->>>>>>> c4f7baa413cff998de2cab4a4c64070039e4a20f
   end
 
   def send_message_job(subscribers)

@@ -1,9 +1,9 @@
 Rails.application.routes.draw do
 
-  root 'subscribers#tierce'
-  get 'subscribers/tierce' => 'subscribers#tierce', as: :tierce_subscribers
-  get 'subscribers/quarte' => 'subscribers#quarte', as: :quarte_subscribers
-  get 'subscribers/quinte' => 'subscribers#quinte', as: :quinte_subscribers
+  root 'subscribers#pmu'
+  get 'subscribers/pmu' => 'subscribers#pmu', as: :pmu_subscribers
+  get 'subscribers/loto_bonheur' => 'subscribers#loto_bonheur', as: :loto_bonheur_subscribers
+  #get 'subscribers/quinte' => 'subscribers#quinte', as: :quinte_subscribers
   get 'subscribers/load_list' => 'subscribers#load_list', as: :subscribers_load_list
   post 'subscribers/load_excel_list' => 'subscribers#load_excel_list', as: :subscribers_load_excel_list
 
@@ -14,6 +14,10 @@ Rails.application.routes.draw do
   get 'transactions' => 'transactions#list', as: :transactions
 
   get 'message_logs/:transaction_id' => 'message_logs#list', as: :message_logs
+
+  get 'search' => 'search#index', as: :search
+  post 'search/perform' => 'search#perform', as: :perform_search
+  get 'search/perform' => 'search#index'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

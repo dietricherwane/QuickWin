@@ -3,19 +3,14 @@ class SubscribersController < ApplicationController
 
   layout "administrator"
 
-  def tierce
-    subscribers_per_profile("Tiercé")
-    @tierce_active_subclass = "this"
+  def pmu
+    subscribers_per_profile("PMU")
+    @pmu_active_subclass = "this"
   end
 
-  def quarte
-    subscribers_per_profile("Quarté")
-    @quarte_active_subclass = "this"
-  end
-
-  def quinte
-    subscribers_per_profile("Quinté")
-    @quinte_active_subclass = "this"
+  def loto_bonheur
+    subscribers_per_profile("LOTO BONHEUR")
+    @loto_bonheur_active_subclass = "this"
   end
 
   def subscribers_per_profile(profile)
@@ -95,18 +90,10 @@ class SubscribersController < ApplicationController
 
   def validate_profile
     case @profile
-      when "quinte"
-        @profile = "Quinté"
-      when "quinté"
-        @profile = "Quinté"
-      when "quarte"
-        @profile = "Quarté"
-      when "quarté"
-        @profile = "Quarté"
-      when "tierce"
-        @profile = "Tiercé"
-      when "tiercé"
-        @profile = "Tiercé"
+      when "pmu"
+        @profile = "PMU"
+      when "loto bonheur"
+        @profile = "LOTO BONHEUR"
       else
         @error = true
       end

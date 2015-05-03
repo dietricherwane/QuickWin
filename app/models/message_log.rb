@@ -6,7 +6,7 @@ class MessageLog < ActiveRecord::Base
   belongs_to :sms_transaction
 
   # Set accessible fields
-  attr_accessible :subscriber_id, :msisdn, :profile_id, :period_id, :message, :sms_transaction_id, :status, :message_id
+  attr_accessible :subscriber_id, :msisdn, :profile_id, :period_id, :message, :sms_transaction_id, :status, :message_id, :created_at
 
   # Renaming attributes into more friendly text
   HUMANIZED_ATTRIBUTES = {

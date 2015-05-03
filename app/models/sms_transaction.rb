@@ -3,7 +3,7 @@ class SmsTransaction < ActiveRecord::Base
   has_many :message_logs
   belongs_to :profile
   # Set accessible fields
-  attr_accessible :started_at, :ended_at, :profile_id, :description, :send_messages, :failed_messages, :number_of_messages
+  attr_accessible :started_at, :ended_at, :profile_id, :description, :send_messages, :failed_messages, :number_of_messages, :created_at
 
   # Renaming attributes into more friendly text
   HUMANIZED_ATTRIBUTES = {

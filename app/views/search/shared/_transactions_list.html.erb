@@ -1,0 +1,38 @@
+<thead>
+  <tr>
+    <td>Profil</td>
+    <td>Date de début</td>
+    <td>Date de fin</td>
+    <td>Nombre total de messages</td>
+    <td>Nombre de messages envoyés</td>
+    <td>Nombre de messages échoués</td>
+  </tr>
+</thead>
+
+<tbody>
+  <% unless @transaction_logs.blank? %>
+    <% @transaction_logs.each do |transaction| %>
+      <tr>
+        <% status = (transaction.ended_at.blank? ? 'taskD' : 'taskPr') %>
+        <td class = "<%= status %>">
+          <%= link_to transaction.profile.name, message_logs_path(transaction.id) %>
+        </td>
+        <td>
+          <%= (transaction.started_at.strftime("%d-%m-%Y") rescue "") + " - " + (transaction.started_at.strftime("%Hh %Mmn") rescue "") %>
+        </td>
+        <td>
+          <%= (transaction.ended_at.strftime("%d-%m-%Y") rescue "") + " - " + (transaction.ended_at.strftime("%Hh %Mmn") rescue "") %>
+        </td>
+        <td>
+          <%= transaction.number_of_messages %>
+        </td>
+        <td>
+          <%= transaction.send_messages %>
+        </td>
+        <td>
+          <%= transaction.failed_messages %>
+        </td>
+      </tr>
+    <% end %>
+  <% end %>
+</tbody>
