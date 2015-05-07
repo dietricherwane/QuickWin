@@ -1,4 +1,6 @@
 class MessageLogsController < ApplicationController
+  prepend_before_filter :authenticate_user!
+
   layout "administrator"
 
   def list

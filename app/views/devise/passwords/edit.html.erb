@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+  <title>Quick Win::Modifier le mot de passe</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+
+<body class="nobg loginPage">
+
+<!-- Top fixed navigation -->
+<div class="topNav">
+    <div class="wrapper">
+        <div class="userNav">
+            <ul>
+                <li></li>
+            </ul>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+
+
+
+<!-- Main content wrapper -->
+<div class="loginWrapper">
+  <% flash.each do |key, value| %>
+    <div class="nNote nInformation hideit" style = "width: 340px;">
+      <p>
+        <%= value %>
+      </p>
+    </div>
+  <% end %>
+
+  <div class="loginLogo"><img src="<%= asset_path 'loginLogo.png' %>" alt="" /></div>
+  <div class="widget">
+      <div class="title"><img src="<%= asset_path 'icons/dark/files.png' %>" alt="" class="titleIcon" /><h6>Modifier le mot de passe</h6></div>
+      <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
+        <%= f.hidden_field :reset_password_token %>
+        <fieldset>
+            <div class="formRow">
+              <label for="login">Mot de passe:</label>
+              <div class="loginInput">
+                <%= f.password_field :password, autofocus: true, autocomplete: "off", placeholder: "Veuillez entrer votre mot de passe" %>
+              </div>
+
+              <div class="clear"></div>
+            </div>
+
+            <div class="formRow">
+              <label for="pass">Password:</label>
+              <div class="loginInput">
+                <%= f.password_field :password_confirmation, autocomplete: "off", placeholder: "Veuillez confirmer votre mot de passe" %>
+              </div>
+              <div class="clear"></div>
+            </div>
+
+            <div class="loginControl">
+              <%= f.submit "Modifier le mot de passe", class: "dredB logMeIn" %>
+              <div class="clear"></div>
+            </div>
+        </fieldset>
+      <% end %>
+
+      <%= render "devise/shared/links" %>
+  </div>
+</div>
+
+</body>
+</html>

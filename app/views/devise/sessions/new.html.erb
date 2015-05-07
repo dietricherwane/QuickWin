@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+  <title>Quick Win::Login</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+
+<body class="nobg loginPage">
+
+<!-- Top fixed navigation -->
+<div class="topNav">
+    <div class="wrapper">
+        <div class="userNav">
+            <ul>
+                <li></li>
+            </ul>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+
+
+
+<!-- Main content wrapper -->
+<div class="loginWrapper">
+  <% flash.each do |key, value| %>
+    <div class="nNote nInformation hideit" style = "width: 340px;">
+      <p>
+        <%= value %>
+      </p>
+    </div>
+  <% end %>
+
+  <div class="loginLogo"><img src="<%= asset_path 'loginLogo.png' %>" alt="" /></div>
+  <div class="widget">
+      <div class="title"><img src="<%= asset_path 'icons/dark/files.png' %>" alt="" class="titleIcon" /><h6>Formulaire de connexion</h6></div>
+      <%= form_for(resource, as: resource_name, url: session_path(resource_name), class: "form") do |f| %>
+        <fieldset>
+            <div class="formRow">
+              <label for="login">Username:</label>
+              <div class="loginInput">
+                <%= f.text_field :email, autofocus: true, placeholder: "Veuillez entrer votre email" %>
+              </div>
+
+              <div class="clear"></div>
+            </div>
+
+            <div class="formRow">
+              <label for="pass">Password:</label>
+              <div class="loginInput">
+                <%= f.password_field :password, autocomplete: "off", placeholder: "Veuillez entrer votre mot de passe" %>
+              </div>
+              <div class="clear"></div>
+            </div>
+
+            <div class="loginControl">
+              <%= f.submit "Se connecter", class: "dredB logMeIn" %>
+              <div class="clear"></div>
+            </div>
+        </fieldset>
+      <% end %>
+
+      <%= render "devise/shared/links" %>
+  </div>
+</div>
+
+</body>
+</html>

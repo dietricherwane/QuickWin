@@ -1,6 +1,8 @@
 class SearchController < ApplicationController
   include MessagesHelper
 
+  prepend_before_filter :authenticate_user!
+
   layout "administrator"
 
   def index

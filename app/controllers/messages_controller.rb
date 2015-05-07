@@ -2,6 +2,7 @@ class MessagesController < ApplicationController
   include MessagesHelper
 
   before_action :init_messages, only: [:send_message]
+  prepend_before_filter :authenticate_user!
 
   layout "administrator"
 

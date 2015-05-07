@@ -1,0 +1,71 @@
+<!-- Title area -->
+<div class="titleArea">
+    <div class="wrapper">
+        <div class="pageTitle">
+            <h5>Créer un compte</h5>
+            <span>Ajout d'administrateur à la plateforme</span>
+        </div>
+
+        <div class="clear"></div>
+    </div>
+</div>
+
+<div class="line"></div>
+
+<%#= render "messages/shared/sub_menu" %>
+
+<div class="line"></div>
+
+<!-- Main content wrapper -->
+<div class="wrapper">
+  <%= devise_error_messages! %>
+
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+    <fieldset>
+      <div class="widget">
+        <div class="title"><img src="<%= asset_path 'icons/dark/users.png' %>" alt="" class="titleIcon" /><h6>Ajouter un administrateur à la plateforme</h6></div>
+
+          <div class="formRow">
+            <label>Nom</label>
+            <div class="formRight">
+              <%= f.text_field :firstname, autofocus: true, placeholder: "Veuillez entrer le nom" %>
+            </div>
+            <div class="clear"></div>
+          </div>
+          <div class="formRow">
+            <label>Prénoms</label>
+            <div class="formRight">
+              <%= f.text_field :lastname, placeholder: "Veuillez entrer les prénoms" %>
+            </div>
+            <div class="clear"></div>
+          </div>
+          <div class="formRow">
+            <label>Email</label>
+            <div class="formRight">
+              <%= f.text_field :email, placeholder: "Veuillez entrer l'email" %>
+            </div>
+            <div class="clear"></div>
+          </div>
+          <div class="formRow">
+            <label>Mot de passe</label>
+            <div class="formRight">
+              <%= f.password_field :password, autocomplete: "off", placeholder: "Veuillez entrer le mot de passe" %>
+            </div>
+            <div class="clear"></div>
+          </div>
+          <div class="formRow">
+            <label>Confirmation de mot de passe</label>
+            <div class="formRight">
+              <%= f.password_field :password_confirmation, autocomplete: "off", placeholder: "Veuillez confirmer le mot de passe" %>
+            </div>
+            <div class="clear"></div>
+          </div>
+
+          <div class="formRow">
+            <%= f.submit 'Envoyer', class: 'basic' %>
+          </div>
+      </div>
+    </fieldset>
+  <% end %>
+</div>
+<!-- End Main content wrapper -->

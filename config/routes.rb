@@ -1,9 +1,10 @@
 Rails.application.routes.draw do
-
   root 'subscribers#pmu'
+
+  devise_for :users, :controllers => {:registrations => "users/registrations", :sessions => "users/sessions", :passwords => "users/passwords", :confirmations => "users/confirmations"}
+
   get 'subscribers/pmu' => 'subscribers#pmu', as: :pmu_subscribers
   get 'subscribers/loto_bonheur' => 'subscribers#loto_bonheur', as: :loto_bonheur_subscribers
-  #get 'subscribers/quinte' => 'subscribers#quinte', as: :quinte_subscribers
   get 'subscribers/load_list' => 'subscribers#load_list', as: :subscribers_load_list
   post 'subscribers/load_excel_list' => 'subscribers#load_excel_list', as: :subscribers_load_excel_list
 
