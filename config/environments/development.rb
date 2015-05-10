@@ -10,6 +10,7 @@ Rails.application.configure do
   config.eager_load = false
 
   config.action_mailer.default_url_options = { :host => '41.189.40.193:8888' }
+=begin
   ActionMailer::Base.smtp_settings = {
   	:openssl_verify_mode => 'none',
 		:address => "smtp.gmail.com",
@@ -18,6 +19,16 @@ Rails.application.configure do
 		:authentication => :plain,
 		:user_name => "mensah.dietrich@gmail.com",
 		:password => '20dianapopoulos12'
+	}
+=end
+	ActionMailer::Base.smtp_settings = {
+  	:openssl_verify_mode => 'none',
+		:address => "smtp.1and1.com",
+		:enable_starttls_auto => true,
+		:port => 25,
+		:authentication => :plain,
+		:user_name => "admin.lonaci@ngser.com",
+		:password => 'pushlonaci2015'
 	}
 
   # Show full error reports and disable caching.

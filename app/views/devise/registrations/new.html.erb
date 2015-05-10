@@ -19,6 +19,13 @@
 <!-- Main content wrapper -->
 <div class="wrapper">
   <%= devise_error_messages! %>
+  <% flash.each do |key, value| %>
+    <div class="nNote nInformation hideit">
+      <p>
+        <%= value %>
+      </p>
+    </div>
+  <% end %>
 
   <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
     <fieldset>
