@@ -12,7 +12,7 @@
   <% unless @message_logs.blank? %>
     <% @message_logs.each do |message_log| %>
       <tr>
-        <% status = (message_log.status == "1701" ? 'taskPr' : 'taskD') %>
+        <% status = (!message_log.status.blank? ? 'taskPr' : 'taskD') %>
         <td class = "<%= status %>">
           <%= message_log.msisdn %>
         </td>
