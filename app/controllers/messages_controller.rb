@@ -151,17 +151,21 @@ class MessagesController < ApplicationController
   end
 
   def send_message_request(msisdn)
-    request = Typhoeus::Request.new("http://smsplus3.routesms.com:8080/bulksms/bulksms?username=ngser1&password=abcd1234&type=0&dlr=1&destination=#{msisdn}&source=LONACI&message=#{URI.escape(@message)}", followlocation: true, method: :get)
+    #request = Typhoeus::Request.new("http://smsplus3.routesms.com:8080/bulksms/bulksms?username=ngser1&password=abcd1234&type=0&dlr=1&destination=#{msisdn}&source=LONACI&message=#{URI.escape(@message)}", followlocation: true, method: :get)
+    request = Typhoeus::Request.new("http://api.clickatell.com/http/sendmsg?user=ngser2015&password=LdaKaebCECUYOL&api_id=3541935&to=#{msisdn}&text=#{URI.escape(@message)}", followlocation: true, method: :get)
 
     request.on_complete do |response|
       if response.success?
-        result = response.body.strip.split("|") rescue nil
-        if result[0] == "1701"
+        #result = response.body.strip.split("|") rescue nil
+        #if result[0] == "1701"
+        if response.body.strip[0..1] == "ID"
           @sent_messages += 1
-          @transaction.message_logs.create(subscriber_id: (@subscriber.id rescue nil), msisdn: msisdn, profile_id: (@subscriber.profile_id rescue nil), period_id: (@subscriber.period_id rescue nil), message: @message, status: result[0], message_id: result[2])
+          #@transaction.message_logs.create(subscriber_id: (@subscriber.id rescue nil), msisdn: msisdn, profile_id: (@subscriber.profile_id rescue nil), period_id: (@subscriber.period_id rescue nil), message: @message, status: result[0], message_id: result[2])
+          @transaction.message_logs.create(subscriber_id: (@subscriber.id rescue nil), msisdn: msisdn, profile_id: (@subscriber.profile_id rescue nil), period_id: (@subscriber.period_id rescue nil), message: @message, status: result[0], message_id: response.body.strip.split(":")[1])
         else
           @failed_messages += 1
-          @transaction.message_logs.create(subscriber_id: (@subscriber.id rescue nil), msisdn: msisdn, profile_id: (@subscriber.profile_id rescue nil), period_id: (@subscriber.period_id rescue nil), message: @message, status: result[0])
+          #@transaction.message_logs.create(subscriber_id: (@subscriber.id rescue nil), msisdn: msisdn, profile_id: (@subscriber.profile_id rescue nil), period_id: (@subscriber.period_id rescue nil), message: @message, status: result[0])
+          @transaction.message_logs.create(subscriber_id: (@subscriber.id rescue nil), msisdn: msisdn, profile_id: (@subscriber.profile_id rescue nil), period_id: (@subscriber.period_id rescue nil), message: @message, status: response.body.strip.split(":")[1])
         end
       end
     end
