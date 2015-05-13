@@ -152,7 +152,7 @@ class MessagesController < ApplicationController
 
   def send_message_request(msisdn)
     #request = Typhoeus::Request.new("http://smsplus3.routesms.com:8080/bulksms/bulksms?username=ngser1&password=abcd1234&type=0&dlr=1&destination=#{msisdn}&source=LONACI&message=#{URI.escape(@message)}", followlocation: true, method: :get)
-    request = Typhoeus::Request.new("http://api.clickatell.com/http/sendmsg?user=ngser2015&password=LdaKaebCECUYOL&api_id=3541935&to=#{msisdn}&text=#{URI.escape(@message)}", followlocation: true, method: :get)
+    request = Typhoeus::Request.new("http://api.clickatell.com/http/sendmsg?user=ngser2015&password=LdaKaebCECUYOL&api_id=3541935&from=LONACI&to=#{msisdn}&text=#{URI.escape(@message)}", followlocation: true, method: :get)
 
     request.on_complete do |response|
       if response.success?
