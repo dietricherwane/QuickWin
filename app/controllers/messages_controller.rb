@@ -192,7 +192,7 @@ class MessagesController < ApplicationController
 
   # Make sure the user uploads an xls or xlsx file
   def validate_subscribers_file
-    if @subscribers_file.blank? || (@subscribers_file.content_type != "application/vnd.ms-excel" && @subscribers_file.content_type != "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+    if @subscribers_file.blank? || (@subscribers_file.content_type != "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
       @error_message << "Veuillez choisir un fichier Excel contenant une liste de numéros.<br />"
       @error = true
     end

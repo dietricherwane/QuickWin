@@ -40,7 +40,33 @@ class SubscribersController < ApplicationController
     validate_subscribers_file
 
     unless @error
-      @spreadsheet = Spreadsheet.open(@subscribers_file.path).worksheet(0)
+      @spreadsheet = Roo::Spreadsheet.open(@subscribers_file.path, extension: :xlsx).sheet(0)
+      for i in 1..@spreadsheet.last_row
+        @name = @spreadsheet.cell(i,1).to_s.strip
+        @msisdn = @spreadsheet.cell(i,2).to_s.strip[-11,11]
+        @profile = @spreadsheet.cell(i,3).to_s.strip.downcase
+        @period = @spreadsheet.cell(i,4).to_s.strip
+
+        validate_msisdn
+        validate_profile
+        validate_period
+
+        unless @error
+          inserted = true
+          @subscriber = Subscriber.find_by_msisdn(@msisdn)
+          if @subscriber
+            profile_id = Profile.find_by_name(@profile).id
+            period_id = Period.find_by_number_of_days(@period.to_i).id
+            @subscriber.update_attributes(name: @name, profile_id: profile_id, period_id: period_id, last_registration_date: DateTime.now, last_registration_period: @period, registrations_times: (@subscriber.registrations_times + 1))
+          else
+            @subscriber = Subscriber.create(name: @name, msisdn: @msisdn, profile_id: Profile.find_by_name(@profile).id, period_id: Period.find_by_number_of_days(@period.to_i), last_registration_date: DateTime.now, last_registration_period: @period, registrations_times: 1)
+          end
+          RegistrationLog.create(subscriber_id: @subscriber.id, profile_id: profile_id, period_id: period_id)
+        end
+      end
+
+=begin
+@spreadsheet = Spreadsheet.open(@subscribers_file.path).worksheet(0)
       @spreadsheet.each do |row|
         @name = row[0].to_s.strip
         @msisdn = row[1].to_s.strip[-11,11]
@@ -64,6 +90,7 @@ class SubscribersController < ApplicationController
           RegistrationLog.create(subscriber_id: @subscriber.id, profile_id: profile_id, period_id: period_id)
         end
       end
+=end
     end
 
     if inserted
@@ -78,8 +105,8 @@ class SubscribersController < ApplicationController
 
   # Make sure the user uploads an xls or xlsx file
   def validate_subscribers_file
-    if @subscribers_file.blank? || (@subscribers_file.content_type != "application/vnd.ms-excel" && @subscribers_file.content_type != "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
-      @error_message << "Veuillez choisir un fichier Excel contenant une liste de numéros.<br />"
+    if @subscribers_file.blank? || (@subscribers_file.content_type != "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+      @error_message << "Veuillez choisir un fichier Excel 2007 contenant une liste de numéros.<br />"
       @error = true
     end
   end
@@ -102,7 +129,7 @@ class SubscribersController < ApplicationController
   end
 
   def validate_period
-    if not_a_number?(@period) || ![1, 7, 30].include?(@period.to_i)
+    if not_a_number?(@period) || ![7, 15, 30].include?(@period.to_i)
       @error = true
     end
   end

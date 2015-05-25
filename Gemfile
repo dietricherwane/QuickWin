@@ -46,6 +46,7 @@ gem "typhoeus"
 
 gem 'spreadsheet', '~> 1.0.3'
 
+gem 'roo', '~> 2.0.0'
 #gem 'daemons'
 
 # Use ActiveModel has_secure_password
