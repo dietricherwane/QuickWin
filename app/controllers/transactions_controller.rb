@@ -1,5 +1,5 @@
 class TransactionsController < ApplicationController
-  prepend_before_filter :authenticate_user!
+  #prepend_before_filter :authenticate_user!
 
   layout "administrator"
 

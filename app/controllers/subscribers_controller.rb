@@ -1,7 +1,7 @@
 class SubscribersController < ApplicationController
   include MessagesHelper
 
-  prepend_before_filter :authenticate_user!
+  #prepend_before_filter :authenticate_user!
 
   layout "administrator"
 
