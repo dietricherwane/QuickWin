@@ -114,6 +114,10 @@ class SubscribersController < ApplicationController
   def validate_msisdn
     if @msisdn.blank? || not_a_number?(@msisdn) || @msisdn.length < 8 || @msisdn.length > 13
       @error = true
+    else
+      if @msisdn.match(/\./)
+        @msisdn = "22" + @msisdn[0..8]
+      end
     end
   end
 
