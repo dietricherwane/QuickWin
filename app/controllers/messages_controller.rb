@@ -151,6 +151,9 @@ class MessagesController < ApplicationController
   end
 
   def send_message_request(msisdn)
+    if msisdn.match(/\./)
+      msisdn = "22" + msisdn[0..8]
+    end
     request = Typhoeus::Request.new("http://smsplus3.routesms.com:8080/bulksms/bulksms?username=ngser1&password=abcd1234&type=0&dlr=1&destination=#{msisdn}&source=LONACI&message=#{URI.escape(@message)}", followlocation: true, method: :get)
 
     request.on_complete do |response|
