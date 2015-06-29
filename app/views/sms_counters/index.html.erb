@@ -1,0 +1,44 @@
+<!-- Title area -->
+<div class="titleArea">
+    <div class="wrapper">
+        <div class="pageTitle">
+            <h5>Mise à jour du nombre de SMS restants</h5>
+            <span>Interface de mise à jour du nombre de SMS restants</span>
+        </div>
+
+        <div class="clear"></div>
+    </div>
+</div>
+
+<div class="line"></div>
+
+<div class="line"></div>
+
+<!-- Main content wrapper -->
+<div class="wrapper">
+  <%= @error_message %>
+  <%= @success_message %>
+
+  <%= form_tag update_sms_counter_path do %>
+    <fieldset>
+      <div class="widget">
+        <div class="title"><img src="<%= asset_path 'icons/dark/users.png' %>" alt="" class="titleIcon" /><h6>Mettre à jour le nombre de SMS restant</h6></div>
+
+          <div class="formRow">
+            <label>Nombre de SMS</label>
+            <div class="formRight">
+              <%= text_field_tag "post[custom_number]", (@sms_counter.amount rescue 0), placeholder: "Veuillez entrer le nombre de SMS restants" %>
+            </div>
+            <div class="clear"></div>
+          </div>
+
+          <div class="formRow">
+            <%= submit_tag 'Envoyer', class: 'basic' %>
+          </div>
+      </div>
+    </fieldset>
+  <% end %>
+
+
+</div>
+<!-- End Main content wrapper -->

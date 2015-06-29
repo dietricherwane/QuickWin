@@ -55,7 +55,7 @@
     <!-- Top fixed navigation -->
     <div class="topNav">
         <div class="wrapper">
-            <div class="welcome"><a href="#" title=""><img src="<%= asset_path 'userPic.png' %>" alt="" /></a><span><%= "#{current_user.lastname rescue nil} #{current_user.firstname rescue nil}" %></span></div>
+            <div class="welcome">[ Nombre de SMS restants: <%= (SmsCounter.first.amount rescue 0) %> ]<span><%= "#{current_user.lastname rescue nil} #{current_user.firstname rescue nil}" %></span></div>
             <div class="userNav">
               <ul>
                   <!--<li><a href="#" title=""><img src="<%= asset_path 'icons/topnav/profile.png' %>" alt="" /><span>Profile</span></a></li>

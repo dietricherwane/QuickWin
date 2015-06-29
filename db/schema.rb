@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150504190912) do
+ActiveRecord::Schema.define(version: 20150629170057) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -75,6 +75,12 @@ ActiveRecord::Schema.define(version: 20150504190912) do
   add_index "registration_logs", ["period_id"], name: "index_registration_logs_on_period_id", using: :btree
   add_index "registration_logs", ["profile_id"], name: "index_registration_logs_on_profile_id", using: :btree
   add_index "registration_logs", ["subscriber_id"], name: "index_registration_logs_on_subscriber_id", using: :btree
+
+  create_table "sms_counters", force: true do |t|
+    t.integer  "amount"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "sms_providers", force: true do |t|
     t.string   "name",       limit: 100
