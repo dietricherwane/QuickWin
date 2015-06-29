@@ -162,6 +162,10 @@ class MessagesController < ApplicationController
         if result[0] == "1701"
           @sent_messages += 1
           @transaction.message_logs.create(subscriber_id: (@subscriber.id rescue nil), msisdn: msisdn, profile_id: (@subscriber.profile_id rescue nil), period_id: (@subscriber.period_id rescue nil), message: @message, status: result[0], message_id: result[2])
+          @sms_counter = SmsCounter.first
+          if @sms_counter != blank?
+            @sms_counter.update_attribute(:amount, (@sms_counter.amount - 1))
+          end
         else
           @failed_messages += 1
           @transaction.message_logs.create(subscriber_id: (@subscriber.id rescue nil), msisdn: msisdn, profile_id: (@subscriber.profile_id rescue nil), period_id: (@subscriber.period_id rescue nil), message: @message, status: result[0])
