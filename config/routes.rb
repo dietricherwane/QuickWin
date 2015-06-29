@@ -19,6 +19,9 @@ Rails.application.routes.draw do
   get 'search' => 'search#index', as: :search
   post 'search/perform' => 'search#perform', as: :perform_search
   get 'search/perform' => 'search#index'
+
+  get 'sms_counter' => 'sms_counters#index', as: :sms_counter
+  post 'sms_counter/update' => 'sms_counters#update', as: :update_sms_counter
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
