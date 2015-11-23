@@ -46,6 +46,39 @@
           <a href="<%= search_path %>" class="<%= @search_active ? 'active' : '' %>"><span>Rechercher</span></a>
         </li>
     </ul>
+
+    <div class="sidebarSep mt0"></div>
+
+    <div class="numStats">
+      <span style = "color: white;">Nombre de SMS envoyés</span>
+      <p></p>
+    	<ul>
+      	<li><%= MessageLog.where(status: '1701', profile_id: Profile.find_by_name('PMU').id).count rescue 0 %><span>PMU</span></li>
+        <li><%= MessageLog.where(status: '1701', profile_id: Profile.find_by_name('LOTO BONHEUR').id).count rescue 0 %><span>LOTO BONHEUR</span></li>
+        <li><%= MessageLog.where(status: '1701', profile_id: Profile.find_by_name('Nouveaux inscrits').id).count rescue 0 %><span>Nouveaux inscrits</span></li>
+      </ul>
+      <div class="clear"></div>
+    </div>
+
+    <div class="sidebarSep mt0"></div>
+
+    <div class="numStats">
+    	<ul>
+      	<li><%= MessageLog.where(status: '1701', profile_id: Profile.find_by_name('Participants en cours').id).count rescue 0 %><span>Participants en cours</span></li>
+        <li><%= MessageLog.where(status: '1701', profile_id: Profile.find_by_name('Participants non actifs').id).count rescue 0 %><span>Participants non actifs</span></li>
+        <li><%= MessageLog.where(status: '1701', profile_id: Profile.find_by_name('Numéro unique').id).count rescue 0 %><span>Numéro unique</span></li>
+      </ul>
+      <div class="clear"></div>
+    </div>
+
+    <div class="sidebarSep mt0"></div>
+
+    <div class="numStats">
+    	<ul>
+      	<li><%= MessageLog.where(status: '1701', profile_id: Profile.find_by_name('Liste de numéros').id).count rescue 0 %><span>Liste de numéros</span></li>
+      </ul>
+      <div class="clear"></div>
+    </div>
 </div>
 
 

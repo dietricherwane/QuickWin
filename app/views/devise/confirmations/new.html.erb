@@ -39,7 +39,7 @@
   <div class="loginLogo"><img src="<%= asset_path 'loginLogo.png' %>" alt="" /></div>
   <div class="widget">
       <div class="title"><img src="<%= asset_path 'icons/dark/files.png' %>" alt="" class="titleIcon" /><h6>Réinitialiser le mot de passe</h6></div>
-      <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+      <%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f| %>
         <fieldset>
             <div class="formRow">
               <label for="login">Email:</label>
