@@ -2,7 +2,7 @@ class MessagesController < ApplicationController
   include MessagesHelper
 
   before_action :init_messages, only: [:send_message]
-  #prepend_before_filter :authenticate_user!
+  prepend_before_filter :authenticate_user!
 
   layout "administrator"
 
@@ -120,7 +120,7 @@ class MessagesController < ApplicationController
   end
 
   def deliver_message_to_excel_list
-    Thread.new do
+    #Thread.new do
       @spreadsheet = Spreadsheet.open(@subscribers_file.path).worksheet(0)
       @spreadsheet.each do |row|
         msisdn = row[0].to_s
@@ -132,7 +132,7 @@ class MessagesController < ApplicationController
       if (ActiveRecord::Base.connection && ActiveRecord::Base.connection.active?)
         ActiveRecord::Base.connection.close
       end
-    end
+    #end
     #if (@sent_messages + @failed_messages) == 0
       #@error_message << "Le fichier ne contenait aucun numéro valide.<br />"
     #else
@@ -199,7 +199,7 @@ class MessagesController < ApplicationController
 
   # Make sure the user uploads an xls or xlsx file
   def validate_subscribers_file
-    if @subscribers_file.blank? || (@subscribers_file.content_type != "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+    if @subscribers_file.blank? || (@subscribers_file.content_type != "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" && @subscribers_file.content_type != "application/vnd.ms-excel")
       @error_message << "Veuillez choisir un fichier Excel contenant une liste de numéros.<br />"
       @error = true
     end
