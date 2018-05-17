@@ -68,7 +68,7 @@
     <!-- Top fixed navigation -->
     <div class="topNav">
         <div class="wrapper">
-            <div class="welcome">[ Nombre de SMS restants: <%= (SmsCounter.first.amount rescue 0) %> ]<span><%= "#{current_user.lastname rescue nil} #{current_user.firstname rescue nil}" %></span></div>
+            <div class="welcome"><span><%= "#{current_user.lastname rescue nil} #{current_user.firstname rescue nil}" %> [ Nombre de SMS restants: <%= number_with_delimiter((Parameter.first.infobip_sms_counter rescue 0), delimiter: " ") %> ]</span></div>
             <div class="userNav">
               <ul>
                   <!--<li><a href="#" title=""><img src="<%= asset_path 'icons/topnav/profile.png' %>" alt="" /><span>Profile</span></a></li>
