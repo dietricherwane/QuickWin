@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150629170057) do
+ActiveRecord::Schema.define(version: 20180517024749) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,6 +49,17 @@ ActiveRecord::Schema.define(version: 20150629170057) do
   add_index "message_logs", ["profile_id"], name: "index_message_logs_on_profile_id", using: :btree
   add_index "message_logs", ["sms_transaction_id"], name: "index_message_logs_on_sms_transaction_id", using: :btree
   add_index "message_logs", ["subscriber_id"], name: "index_message_logs_on_subscriber_id", using: :btree
+
+  create_table "parameters", force: true do |t|
+    t.string   "sms_provider"
+    t.string   "sms_sender"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "infobip_provider_url"
+    t.string   "infobip_provider_username"
+    t.string   "infobip_provider_password"
+    t.integer  "infobip_sms_counter"
+  end
 
   create_table "periods", force: true do |t|
     t.string   "name",           limit: 100

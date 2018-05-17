@@ -113,7 +113,7 @@ class MessagesController < ApplicationController
         end
       end
 
-      @success_message = messages!("Les messages ont été envoyés. Veuillez consulter l'état de l'envoi dans la liste des tansactions.", "success")
+      @success_message = messages!("Les messages ont été envoyés. Veuillez consulter l'état de l'envoi dans la liste des transactions.", "success")
     else
       @error_message << "Aucun message n'a été envoyé car il n'y avait aucun abonné dans la liste correspondant à vos critères.<br />"
     end
@@ -136,7 +136,7 @@ class MessagesController < ApplicationController
     #if (@sent_messages + @failed_messages) == 0
       #@error_message << "Le fichier ne contenait aucun numéro valide.<br />"
     #else
-      @success_message = messages!("Veuillez consulter l'état de l'envoi dans la liste des tansactions.", "success")
+      @success_message = messages!("Veuillez consulter l'état de l'envoi dans la liste des transactions.", "success")
     #end
   end
 
@@ -154,6 +154,7 @@ class MessagesController < ApplicationController
     if msisdn.match(/\./)
       msisdn = "22" + msisdn[0..8]
     end
+=begin
     request = Typhoeus::Request.new("http://smsplus3.routesms.com:8080/bulksms/bulksms?username=ngser1&password=abcd1234&type=0&dlr=1&destination=#{msisdn}&source=LONACI&message=#{URI.escape(@message)}", followlocation: true, method: :get)
 
     request.on_complete do |response|
@@ -174,6 +175,43 @@ class MessagesController < ApplicationController
     end
 
     request.run
+=end
+    parameter = Parameter.first
+
+    case (parameter.sms_provider rescue nil)
+    when "BICS"
+      #send_with_bics(parameter, msisdn, @sender, @message)
+    when "ROUTESMS"
+      #send_with_routesms(parameter, msisdn, @sender, @message)
+    when "INFOBIP"
+      send_with_infobip(parameter, msisdn, parameter.sms_sender, @message)
+    else
+      send_with_infobip(parameter, msisdn, parameter.sms_sender, @message)
+    end
+
+    if @status == "1"
+      @status = "1"
+      @sent_messages += 1
+      @transaction.message_logs.create(subscriber_id: (@subscriber.id rescue nil), msisdn: msisdn, profile_id: (@subscriber.profile_id rescue nil), period_id: (@subscriber.period_id rescue nil), message: @message, status: @request_status, message_id: @message_id, customer_id: (@service.id rescue nil), user_id: (@service.user.id rescue nil))
+      # Décrémentation du compteur de SMS
+      parameter.update_attributes(infobip_sms_counter: parameter.infobip_sms_counter - 1) rescue nil
+    else
+      @failed_messages += 1
+      @transaction.message_logs.create(subscriber_id: (@subscriber.id rescue nil), msisdn: msisdn, profile_id: (@subscriber.profile_id rescue nil), period_id: (@subscriber.period_id rescue nil), message: @message, status: @request_status, customer_id: (@service.id rescue nil), user_id: (@service.user.id rescue nil))
+    end
+  end
+
+  def send_with_infobip(parameter, msisdn, sender, message)
+    sms_provider_url = parameter.infobip_provider_url rescue ''
+    auth_header = Base64.encode64(parameter.infobip_provider_username + ":" + parameter.infobip_provider_password) rescue ''
+    result = RestClient.post sms_provider_url, {'from' => "#{sender}", 'to' => "#{msisdn}", 'text' => "#{message}"}.to_json, {content_type: :json, accept: :json, :Authorization => "Basic #{auth_header}"}# rescue nil
+    @request_status = JSON.parse(result)["messages"].first["status"]["groupName"] #rescue nil
+    if @request_status == "ACCEPTED" || @request_status == "PENDING"
+      @status = "1"
+      @message_id = JSON.parse(result)["messages"].first["messageId"]
+    else
+      @status = "6"
+    end
   end
 
   def validate_profile_id
