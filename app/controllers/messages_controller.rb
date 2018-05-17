@@ -133,11 +133,11 @@ class MessagesController < ApplicationController
         ActiveRecord::Base.connection.close
       end
     #end
-    #if (@sent_messages + @failed_messages) == 0
-      #@error_message << "Le fichier ne contenait aucun numéro valide.<br />"
-    #else
+    if (@sent_messages + @failed_messages) == 0
+      @error_message << "Le fichier ne contenait aucun numéro valide.<br />"
+    else
       @success_message = messages!("Veuillez consulter l'état de l'envoi dans la liste des transactions.", "success")
-    #end
+    end
   end
 
   def send_message_job(subscribers)
