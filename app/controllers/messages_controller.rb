@@ -182,11 +182,11 @@ class MessagesController < ApplicationController
     when "BICS"
       #send_with_bics(parameter, msisdn, @sender, @message)
     when "ROUTESMS"
-      #send_with_routesms(parameter, msisdn, @sender, @message)
+      send_with_routesms(parameter, msisdn, 'LONACI', @message)
     when "INFOBIP"
-      send_with_infobip(parameter, msisdn, parameter.sms_sender, @message)
+      send_with_infobip(parameter, msisdn, 'LONACI', @message)
     else
-      send_with_infobip(parameter, msisdn, parameter.sms_sender, @message)
+      send_with_infobip(parameter, msisdn, 'LONACI', @message)
     end
 
     if @status == "1"
@@ -214,6 +214,22 @@ class MessagesController < ApplicationController
     end
   end
 
+<<<<<<< HEAD
+=======
+  def send_with_routesms(parameter, msisdn, sender, message)
+    request = Typhoeus::Request.new(parameter.routesms_provider_url + "?username=#{parameter.routesms_provider_username}&password=#{parameter.routesms_provider_password}&type=0&dlr=1&destination=#{msisdn}&source=#{URI.escape(sender)}&message=#{URI.escape(message)}", followlocation: true, method: :get)
+    request.run
+    result = request.response.body.strip.split("|") rescue nil
+    @request_status = result[0]
+    if @request_status == "1701"
+      @status = "1"
+      @message_id = result[2]
+    else
+      @status = "6"
+    end
+  end
+
+>>>>>>> 68fde2b2d0f06761d17331abb27e12dc185d2ef1
   def validate_profile_id
     if @profile_id.blank?
       @error_message << "Le profil ne peut pas être vide.<br />"
