@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180517024749) do
+ActiveRecord::Schema.define(version: 20180705151810) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -59,6 +59,9 @@ ActiveRecord::Schema.define(version: 20180517024749) do
     t.string   "infobip_provider_username"
     t.string   "infobip_provider_password"
     t.integer  "infobip_sms_counter"
+    t.string   "routesms_provider_url"
+    t.string   "routesms_provider_username"
+    t.string   "routesms_provider_password"
   end
 
   create_table "periods", force: true do |t|
