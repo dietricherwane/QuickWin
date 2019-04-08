@@ -1,0 +1,80 @@
+<!-- Title area -->
+<div class="titleArea">
+    <div class="wrapper">
+        <div class="pageTitle">
+            <h5>Clients</h5>
+            <span>Modifier les informations liées au client: <%= @customer.label %></span>
+        </div>
+
+        <div class="clear"></div>
+    </div>
+</div>
+
+<div class="line"></div>
+
+<%= render "customers/shared/sub_menu" %>
+
+<div class="line"></div>
+
+<!-- Main content wrapper -->
+<div class="wrapper">
+
+  <%= @error_message %>
+  <%= @success_message %>
+
+  <%= form_for @customer, as: :customer, method: :post, url: update_customer_path do |f| %>
+    <fieldset>
+      <div class="widget">
+        <div class="title"><img src="<%= asset_path 'icons/dark/users.png' %>" alt="" class="titleIcon" /><h6>Modifier un profil client</h6></div>
+          <%= f.hidden_field(:id, value: @customer.id) %>
+
+          <div class="formRow">
+            <label><%= f.label(:label) %></label>
+            <div class="formRight">
+              <%= f.text_field :label, placeholder: "Libellé" %>
+            </div>
+            <div class="clear"></div>
+          </div>
+
+          <div class="formRow">
+            <label><%= f.label(:sender) %></label>
+            <div class="formRight">
+              <%= f.text_field :sender, placeholder: "Emetteur" %>
+            </div>
+            <div class="clear"></div>
+          </div>
+
+          <div class="formRow">
+            <label><%= f.label(:login) %></label>
+            <div class="formRight">
+              <%= f.text_field :login, placeholder: "Login" %>
+            </div>
+            <div class="clear"></div>
+          </div>
+
+          <div class="formRow">
+            <label><%= f.label(:password) %></label>
+            <div class="formRight">
+              <%= f.password_field :password, placeholder: "Mot de passe" %>
+            </div>
+            <div class="clear"></div>
+          </div>
+
+          <div class="formRow">
+            <label>Confirmation du mot de passe</label>
+            <div class="formRight">
+              <%= password_field_tag :password_confirmation, "", placeholder: "Confirmation du mot de passe" %>
+            </div>
+            <div class="clear"></div>
+          </div>
+
+          <div class="formRow">
+            <%= submit_tag 'Modifier', class: 'basic' %>
+          </div>
+      </div>
+    </fieldset>
+  <% end %>
+
+
+</div>
+<!-- End Main content wrapper -->

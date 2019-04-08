@@ -25,6 +25,13 @@
 
     <!-- Left navigation -->
     <ul id="menu" class="nav">
+        <li class="user">
+          <a href="#" class="<%= @customer_active ? @customer_active : 'exp inactive' %>" id = "<%= @customer_current_id %>"><span>Clients</span><strong>2</strong></a>
+          <ul class = "sub">
+            <li class = "<%= @new_customer_active_subclass %>"><%= link_to 'Créer', new_customer_path %></li>
+            <li class = "<%= @list_customers_active_subclass %>"><%= link_to 'Liste', list_customers_path %></li>
+          </ul>
+        </li>
         <li class="ui">
           <a href="#" class="<%= @profile_active ? @profile_active : 'exp inactive' %>" id = "<%= @profile_current_id %>"><span>Profils</span><strong>3</strong></a>
           <ul class = "sub">
