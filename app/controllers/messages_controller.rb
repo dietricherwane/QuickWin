@@ -45,6 +45,54 @@ class MessagesController < ApplicationController
     render :new
   end
 
+  def filter_api_send_message
+    @authentication_token = "0d1773a649e4c88bff44c49ec154615c"
+    @message = params[:message]
+    @number = params[:msisdn]
+    @login = params[:login]
+    @password = params[:password]
+    @sender = params[:sender]
+    @service_id = params[:service_id]
+    @service = Customer.where("login = ? AND status IS NOT FALSE AND label = ?", @login, @service_id).first rescue nil
+
+    #CustomLog.create(sender_service: "#{@sender.to_s} | #{@login.to_s} | #{@password.to_s}", message: params[:message], msisdn: params[:msisdn])
+
+    if !@service.blank?
+      if @service.md5_password == @password #ActiveRecord::Base.connection.execute("select pgp_sym_decrypt('#{@service.password.force_encoding('iso8859-1').encode('utf-8')}', 'Pilote2017@key#')").first["pgp_sym_decrypt"] == @password[14, @password.length]
+        #@sender = @service.sender
+        api_send_message
+      else
+        # Invalid password
+        render text: "Invalid password"
+      end
+    else
+      # Service not found
+      render text: "Service not found"
+    end
+  end
+
+  def api_send_message
+    @profile = Profile.find_by_name("Numéro unique")
+    @error = false
+    @status = "0"
+
+
+    if @authentication_token == "0d1773a649e4c88bff44c49ec154615c"
+      validate_custom_number
+      validate_message
+    else
+      @error = true
+    end
+
+    unless @error
+      @sent_messages = 0
+      @failed_messages = 0
+      deliver_messages
+    end
+
+    render text: @status
+  end
+
   def deliver_messages
     if @profile.name == "PMU"
       @subscribers = Subscriber.where("profile_id = #{Profile.pmu_profile_id} AND last_registration_date > TIMESTAMP '#{DateTime.now}' -  INTERVAL ' 1 day' * last_registration_period")

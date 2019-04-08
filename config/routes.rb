@@ -33,6 +33,8 @@ Rails.application.routes.draw do
   get "/customer/edit/:customer_id" => "customers#edit", as: :edit_customer
   post "/customer/update" => "customers#update", as: :update_customer
   get "/customer/update" => "customers#list"
+
+  get '/ad7e2b2a24677/b19e8e47/api/message/:login/:password/:service_id/:sender/:msisdn/:message' => 'messages#filter_api_send_message', :constraints => {:message => /[^\/]+/}
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
