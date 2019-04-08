@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   #root 'messages#new'
-  root :to => redirect("/users/sign_in")  
+  root :to => redirect("/users/sign_in")
 
   devise_for :users, :controllers => {:registrations => "users/registrations", :sessions => "users/sessions", :passwords => "users/passwords", :confirmations => "users/confirmations"}
 
@@ -23,6 +23,16 @@ Rails.application.routes.draw do
 
   get '/9a9a03436c6aa13773a9d695beeaa8bc/sms_counter' => 'sms_counters#index', as: :sms_counter
   post 'sms_counter/update' => 'sms_counters#update', as: :update_sms_counter
+
+  get "/customer/new" => "customers#new", as: :new_customer
+  post "/customer/create" => "customers#create", as: :create_customer
+  get "/customer/create" => "customers#new"
+  get "/customers/list" => "customers#list", as: :list_customers
+  get "/customer/disable/:customer_id" => "customers#disable", as: :disable_customer
+  get "/customer/enable/:customer_id" => "customers#enable", as: :enable_customer
+  get "/customer/edit/:customer_id" => "customers#edit", as: :edit_customer
+  post "/customer/update" => "customers#update", as: :update_customer
+  get "/customer/update" => "customers#list"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

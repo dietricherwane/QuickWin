@@ -214,8 +214,6 @@ class MessagesController < ApplicationController
     end
   end
 
-<<<<<<< HEAD
-=======
   def send_with_routesms(parameter, msisdn, sender, message)
     request = Typhoeus::Request.new(parameter.routesms_provider_url + "?username=#{parameter.routesms_provider_username}&password=#{parameter.routesms_provider_password}&type=0&dlr=1&destination=#{msisdn}&source=#{URI.escape(sender)}&message=#{URI.escape(message)}", followlocation: true, method: :get)
     request.run
@@ -229,7 +227,6 @@ class MessagesController < ApplicationController
     end
   end
 
->>>>>>> 68fde2b2d0f06761d17331abb27e12dc185d2ef1
   def validate_profile_id
     if @profile_id.blank?
       @error_message << "Le profil ne peut pas être vide.<br />"
