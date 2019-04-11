@@ -16,7 +16,8 @@
       <tr>
         <% status = (transaction.ended_at.blank? ? 'taskD' : 'taskPr') %>
         <td class = "<%= status %>">
-          <%= link_to (transaction.customer.label rescue "Administrateur"), message_logs_path(transaction.id) %>
+          <% sender = (transaction.customer.label rescue "Administrateur") %>
+          <%= link_to sender, message_logs_path(transaction.id) %>
         </td>
         <td>
           <%= link_to transaction.profile.name, message_logs_path(transaction.id) %>
