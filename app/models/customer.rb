@@ -1,6 +1,4 @@
 class Customer < ActiveRecord::Base
-  has_many :sms_transactions
-  has_many :message_logs
   # Set accessible fields
   attr_accessible :label, :uuid, :login, :password, :service_id, :sender, :user_id, :status, :id, :md5_password, :sms_provider_id, :bulk, :clear_password, :email
   #attr_encrypted :encrypted_password
