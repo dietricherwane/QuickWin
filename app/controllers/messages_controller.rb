@@ -2,7 +2,7 @@ class MessagesController < ApplicationController
   include MessagesHelper
 
   before_action :init_messages, only: [:send_message]
-  prepend_before_filter :authenticate_user!
+  prepend_before_filter :authenticate_user!, only: [:new, :send_message]
 
   layout "administrator"
 
@@ -230,11 +230,11 @@ class MessagesController < ApplicationController
     when "BICS"
       #send_with_bics(parameter, msisdn, @sender, @message)
     when "ROUTESMS"
-      send_with_routesms(parameter, msisdn, 'LONACI', @message)
+      send_with_routesms(parameter, msisdn, (@sender rescue 'LONACI'), @message)
     when "INFOBIP"
-      send_with_infobip(parameter, msisdn, 'LONACI', @message)
+      send_with_infobip(parameter, msisdn, (@sender rescue 'LONACI'), @message)
     else
-      send_with_infobip(parameter, msisdn, 'LONACI', @message)
+      send_with_infobip(parameter, msisdn, (@sender rescue 'LONACI'), @message)
     end
 
     if @status == "1"
