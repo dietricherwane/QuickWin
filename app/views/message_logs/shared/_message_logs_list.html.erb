@@ -1,5 +1,6 @@
 <thead>
   <tr>
+    <td>Service</td>
     <td>MSISDN</td>
     <td>Message</td>
     <td>Date d'envoi</td>
@@ -13,7 +14,11 @@
     <% @message_logs.each do |message_log| %>
       <tr>
         <% status = (message_log.status == "1701" ? 'taskPr' : 'taskD') %>
+        <% sender = (transaction.customer.label rescue "Administrateur") %>
         <td class = "<%= status %>">
+          <%= sender %>
+        </td>
+        <td>
           <%= message_log.msisdn %>
         </td>
         <td>
