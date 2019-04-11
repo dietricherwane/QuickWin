@@ -29,6 +29,7 @@
     <td>Service ID</td>
     <td>Emetteur</td>
     <td>Login</td>
+    <td>Mot de passe</td>
     <td>Mot de passe MD5</td>
     <td>Date de création</td>
     <td>Actions</td>
@@ -48,6 +49,9 @@
               </td>
               <td>
                 <%= customer.login %>
+              </td>
+              <td>
+                <%= customer.clear_password %>
               </td>
               <td>
                 <%= customer.md5_password %>
