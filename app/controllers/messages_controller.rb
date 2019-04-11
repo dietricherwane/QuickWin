@@ -147,7 +147,7 @@ class MessagesController < ApplicationController
   end
 
   def set_transaction(description, subscribers_count)
-    @transaction = SmsTransaction.create(started_at: DateTime.now, profile_id: @profile.id, description: description, number_of_messages: subscribers_count)
+    @transaction = SmsTransaction.create(started_at: DateTime.now, profile_id: @profile.id, description: description, number_of_messages: subscribers_count, customer_id: (@service.id rescue nil))
   end
 
   # Handle message delivery for: PMU, LOTO BONHEUR, Nouveaux inscrits, Clients actifs, clients non actifs
