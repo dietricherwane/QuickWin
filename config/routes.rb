@@ -35,6 +35,12 @@ Rails.application.routes.draw do
   get "/customer/update" => "customers#list"
 
   get '/ad7e2b2a24677/b19e8e47/api/message/:login/:password/:service_id/:sender/:msisdn/:message' => 'messages#filter_api_send_message', :constraints => {:message => /[^\/]+/}
+  get "/customer/sign_in" => "customers#new_session", as: :customer_login
+  delete "/customer/sign_out" => "customers#delete_session", as: :customer_sign_out
+  post "/customer/session/create" => "customers#create_session", as: :create_customer_session
+  get 'customer/transactions' => 'customer_transactions#list', as: :customer_transactions
+  get 'customer/message_logs/:transaction_id' => 'customer_message_logs#list', as: :customer_message_logs
+  get 'customer/message_logs/export/:transaction_id' => 'customer_message_logs#export', as: :export_customer_message_logs
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
