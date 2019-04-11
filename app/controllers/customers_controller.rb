@@ -2,7 +2,7 @@ class CustomersController < ApplicationController
   include MessagesHelper
 
   before_action :init_customer_view, only: [:new, :list]
-  #prepend_before_filter :authenticate_user!, only: [:new, :create]
+  prepend_before_filter :authenticate_user!, only: [:new, :create]
 
   layout :select_layout
 
@@ -132,5 +132,39 @@ class CustomersController < ApplicationController
     @customer_active = "active exp"
     @customer_current_id = "current"
     @list_customers_active_subclass = "this"
+  end
+
+  # Interface de connexion utilisateur
+  def new_session
+
+    render layout: false
+  end
+
+  #Vérification des informations de connexion utilisateur
+  def create_session
+    @login = params[:login]
+    @password = params[:password]
+
+    @customer = Customer.where("login = ?", @login)
+    @error_message = messages!("Veuillez vérifier votre login", "error") if @customer.blank?
+    if @error_message.blank?
+      @error_message = messages!("Veuillez vérifier votre mot de passe", "error") if @customer.first.clear_password != @password
+      if @error_message.blank?
+        session[:customer] = @customer.first
+      end
+    end
+
+    if @error_message.blank?
+      redirect_to customer_transactions_path
+    else
+      render :new_session, layout: false
+    end
+  end
+
+  def delete_session
+    session.delete(:customer)
+    @success_message = messages!("Vous êtes à présent déconnecté", "success")
+
+    redirect_to customer_login_path
   end
 end
