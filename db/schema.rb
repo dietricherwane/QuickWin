@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190411224914) do
+ActiveRecord::Schema.define(version: 20190411230536) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -65,6 +65,7 @@ ActiveRecord::Schema.define(version: 20190411224914) do
     t.string   "status",             limit: 200
     t.string   "message_id",         limit: 200
     t.string   "msisdn"
+    t.integer  "customer_id"
   end
 
   add_index "message_logs", ["period_id"], name: "index_message_logs_on_period_id", using: :btree
