@@ -1,5 +1,6 @@
 <thead>
   <tr>
+    <td>Service</td>
     <td>Profil</td>
     <td>Date de début</td>
     <td>Date de fin</td>
@@ -15,6 +16,9 @@
       <tr>
         <% status = (transaction.ended_at.blank? ? 'taskD' : 'taskPr') %>
         <td class = "<%= status %>">
+          <%= link_to (transaction.customer.label rescue "Administrateur"), message_logs_path(transaction.id) %>
+        </td>
+        <td>
           <%= link_to transaction.profile.name, message_logs_path(transaction.id) %>
         </td>
         <td>
