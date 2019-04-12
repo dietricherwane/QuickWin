@@ -41,7 +41,7 @@
     <!-- Top fixed navigation -->
     <div class="topNav">
         <div class="wrapper">
-            <div class="welcome"><span><%= "#{Customer.find_by_id(session[customer]).label rescue nil}" %> </span></div>
+            <div class="welcome"><span><%= "#{Customer.find_by_id(session[:customer]).label}" %> </span></div>
             <div class="userNav">
               <ul>
                   <!--<li><a href="#" title=""><img src="<%= asset_path 'icons/topnav/profile.png' %>" alt="" /><span>Profile</span></a></li>
