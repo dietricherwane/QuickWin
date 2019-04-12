@@ -1,0 +1,42 @@
+<thead>
+  <tr>
+    <td>MSISDN</td>
+    <td>Libellé</td>
+    <td>Emetteur</td>
+    <td>Message</td>
+    <td>Date d'envoi</td>
+    <td>Statut</td>
+    <td>Id du message</td>
+  </tr>
+</thead>
+
+<tbody>
+  <% unless @message_logs.blank? %>
+    <% @message_logs.each do |message_log| %>
+      <tr>
+        <% status = (message_log.status == "1701" ? 'taskPr' : 'taskD') %>
+        <td class = "<%= status %>">
+          <%= message_log.msisdn %>
+        </td>
+        <td>
+          <%= message_log.customer.label rescue nil %>
+        </td>
+        <td>
+          <%= message_log.customer.sender rescue nil %>
+        </td>
+        <td>
+          <%= message_log.message %>
+        </td>
+        <td>
+          <%= message_log.created_at.strftime("%d-%m-%Y") + " - " + message_log.created_at.strftime("%Hh %Mmn") %>
+        </td>
+        <td>
+          <%= message_log.status %>
+        </td>
+        <td>
+          <%= message_log.message_id %>
+        </td>
+      </tr>
+    <% end %>
+  <% end %>
+</tbody>

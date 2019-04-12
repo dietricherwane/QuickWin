@@ -1,0 +1,18 @@
+<div class="statsRow">
+  <div class="wrapper">
+  	<div class="controlB">
+    	<ul>
+      	<li>
+          <a href="<%= customer_transactions_path %>" title=""><img src="<%= asset_path 'icons/control/32/archives.png' %>" alt=""><span>Liste des transactions</span></a>
+        </li>
+        <% if @message_logs_count > 0 %>
+          <li>
+            <a href="<%= export_customer_message_logs_path %>" title=""><img src="<%= asset_path 'icons/control/32/database.png' %>" alt=""><span>Exporter les résultats</span></a>
+          </li>
+        <% end %>
+      </ul>
+      <div class="clear">
+      </div>
+    </div>
+  </div>
+</div>
