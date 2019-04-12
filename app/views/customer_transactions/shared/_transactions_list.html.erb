@@ -20,11 +20,11 @@
           <%= link_to transaction.profile.name, customer_message_logs_path(transaction.id) %>
         </td>
         <td>
-          <%= transaction.service_id %>
+          <%= transaction.service_id  rescue nil %>
           <%#= transaction.sender_service %>
         </td>
         <td>
-          <%= transaction.sender_service %>
+          <%= transaction.sender_service rescue nil %>
           <%#= transaction.sender_service %>
         </td>
         <td>

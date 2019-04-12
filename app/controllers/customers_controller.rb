@@ -150,7 +150,7 @@ class CustomersController < ApplicationController
     if @error_message.blank?
       @error_message = messages!("Veuillez vérifier votre mot de passe", "error") if @customer.first.clear_password != @password
       if @error_message.blank?
-        session[:customer] = @customer.first
+        session[:customer] = @customer.first.id
       end
     end
 
