@@ -56,7 +56,7 @@
                   </li>
                   <li><a href="#" title=""><img src="<%= asset_path 'icons/topnav/settings.png' %>" alt="" /><span>Settings</span></a></li>-->
                   <li>
-                    <%= link_to "Se déconnecter", destroy_user_session_path, :method => :delete %>
+                    <%= link_to "Se déconnecter", customer_sign_out_path, :method => :delete %>
                   </li>
               </ul>
             </div>
