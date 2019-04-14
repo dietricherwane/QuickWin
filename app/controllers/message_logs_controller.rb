@@ -30,19 +30,21 @@ class MessageLogsController < ApplicationController
         set_query_params
       else
         # Invalid password
-        @message = {"status": "2"; "message": "Mot de passe invalide"}
+        @status = "2"
+        @message = "Mot de passe invalide"
       end
     else
       # Service not found
-      @message =  {"status": "0"; "message": "Service introuvable"}
+      @status = "0"
+      @message = "Service introuvable"
     end
-    render text: @message
+    render text: %Q[{"status": "#{@status}"; "message": "#{@message}"; "log": "#{@log}"}]
   end
 
   def validate_search_params
     if @begin_date.blank? && @end_date.blank?
-      @error = true
-      @message = {"status": "3"; "message": "Veuillez entrer une date"}
+      @status => "3"
+      @message = "Veuillez entrer une date"
     end
   end
 
@@ -62,9 +64,12 @@ class MessageLogsController < ApplicationController
     @message_logs = MessageLog.where(message_logs_query)
 
     if @message_logs.blank?
-      @message = {"status": "4"; "message": "Aucune donnée trouvée"}
+      @status = "4"
+      @message = "Aucune donnée trouvée"
     else
-      @message = {"status": "1"; "message": "#{@message_logs.count} messages trouvés"; "log": [MessageLog.all.map{|m| %Q{["message": "#{m.message}"; "msisdn": "#{m.msisdn}"; "date_envoi":"#{m.created_at}"]}}]}
+      @status = "1"
+      @message = %Q[#{@message_logs.count} messages trouvés"]
+      @log = %Q["log": "#{MessageLog.all.map{|m| %Q{["message": "#{m.message}"; "msisdn": "#{m.msisdn}"; "date_envoi":"#{m.created_at}"]}}}]
     end
   end
 
