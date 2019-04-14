@@ -41,6 +41,8 @@ Rails.application.routes.draw do
   get 'customer/transactions' => 'customer_transactions#list', as: :customer_transactions
   get 'customer/message_logs/:transaction_id' => 'customer_message_logs#list', as: :customer_message_logs
   get 'customer/message_logs/export/:transaction_id' => 'customer_message_logs#export', as: :export_customer_message_logs
+  get '/ashye5ea24677/b19e8e47/api/message/:login/:password/:service_id/:begin_date/:end_date' => 'message_logs#api_search'
+  get '/ashye5ea24677/b19e8e47/api/message/:login/:password/:service_id/:begin_date/:end_date/:msisdn' => 'message_logs#api_search'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
