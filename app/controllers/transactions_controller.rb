@@ -26,16 +26,18 @@ class TransactionsController < ApplicationController
 
   def failed_numbers_list
     transaction_id = params[:transaction_id]
-    numbers = MessageLog.where("sms_transaction_id = ? AND status <> '1701' AND status = 'PENDING'", transaction_id).select("msisdn")
+    numbers = MessageLog.where("sms_transaction_id = ? AND status <> '1701' AND status <> 'PENDING'", transaction_id).select("msisdn")
     export("liste-de-numeros-non-transmis", numbers)
   end
 
   def export(title, numbers)
+    File.delete("#{Rails.root}/public/#{title}.xlsx") if File.exist?("#{Rails.root}/public/#{title}.xlsx")
     workbook = WriteXLSX.new("#{Rails.root}/public/#{title}.xlsx")
     worksheet = workbook.add_worksheet
     i = 1
     numbers.each do |number|
       worksheet.write("A#{i}", number.msisdn)
+      i+=1
     end
     workbook.close
 
