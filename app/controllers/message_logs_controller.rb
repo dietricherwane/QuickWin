@@ -16,7 +16,7 @@ class MessageLogsController < ApplicationController
   end
 
   def api_search
-    @number = params[:msisdn]
+    @msisdn = params[:msisdn]
     @login = params[:login]
     @password = params[:password]
     @service_id = params[:service_id]
@@ -38,12 +38,12 @@ class MessageLogsController < ApplicationController
       @status = "0"
       @message = "Service introuvable"
     end
-    render text: %Q[{"status": "#{@status}"; "message": "#{@message}"; "log": "#{@log}"}]
+    render text: %Q[{"status": "#{@status}"; "message": "#{@message}"; "log": [#{@log}]}]
   end
 
   def validate_search_params
     if @begin_date.blank? && @end_date.blank?
-      @status => "3"
+      @status = "3"
       @message = "Veuillez entrer une date"
     end
   end
@@ -69,7 +69,7 @@ class MessageLogsController < ApplicationController
     else
       @status = "1"
       @message = %Q[#{@message_logs.count} messages trouvés"]
-      @log = %Q["log": "#{MessageLog.all.map{|m| %Q{["message": "#{m.message}"; "msisdn": "#{m.msisdn}"; "date_envoi":"#{m.created_at}"]}}}]
+      @log = @message_logs.map{|m| %Q{"message": "#{m.message}"; "msisdn": "#{m.msisdn}"; "date_envoi":"#{m.created_at}}}
     end
   end
 
