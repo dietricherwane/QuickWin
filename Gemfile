@@ -38,7 +38,7 @@ gem 'devise'#, '~> 3.0.4'
 gem 'protected_attributes'
 
 # To handle file upload
-gem "paperclip", "~> 4.2"
+gem "paperclip", "~> 4.3"
 
 # Paginate database results
 gem 'kaminari'
