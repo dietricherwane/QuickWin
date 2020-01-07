@@ -14,6 +14,9 @@ Rails.application.routes.draw do
   get 'message/send' => 'messages#new'
 
   get 'transactions' => 'transactions#list', as: :transactions
+  get "transactions/numbers_list/:transaction_id" => 'transactions#numbers_list', as: :transaction_numbers_list
+  get "transactions/sent_numbers_list/:transaction_id" => 'transactions#sent_numbers_list', as: :transaction_sent_numbers_list
+  get "transactions/failed_numbers_list/:transaction_id" => 'transactions#failed_numbers_list', as: :transaction_failed_numbers_list
 
   get 'message_logs/:transaction_id' => 'message_logs#list', as: :message_logs
 

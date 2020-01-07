@@ -7,6 +7,7 @@
     <td>Nombre total de messages</td>
     <td>Nombre de messages envoyés</td>
     <td>Nombre de messages échoués</td>
+    <td>Exporter</td>
   </tr>
 </thead>
 
@@ -36,6 +37,17 @@
         </td>
         <td>
           <%= transaction.failed_messages %>
+        </td>
+        <td>
+          <% if (transaction.number_of_messages || 0) > 0 %>
+            <a href="<%= transaction_numbers_list_path(transaction.id) %>" title = "liste des numéros à transmettre"><img src="<%= asset_path 'icons/color/report-paper.png' %>" alt="liste des numéros à transmettre"></a> &nbsp;
+          <% end %>
+          <% if (transaction.send_messages || 0) > 0 %>
+            <a href="<%= transaction_sent_numbers_list_path(transaction.id) %>"><img src="<%= asset_path 'icons/color/tick.png' %>" alt="liste des numéros transmis"></a> &nbsp;
+          <% end %>
+          <% if (transaction.failed_messages || 0) > 0 %>
+            <a href="<%= transaction_failed_numbers_list_path(transaction.id) %>"><img src="<%= asset_path 'icons/color/minus-circle.png' %>" alt="liste des numéros non transmis"></a>
+          <% end %>
         </td>
       </tr>
     <% end %>

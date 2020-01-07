@@ -48,6 +48,8 @@ gem "typhoeus"
 
 gem 'spreadsheet', '~> 1.0.3'
 
+gem 'write_xlsx'
+
 gem 'roo', '~> 2.0.0'
 #gem 'daemons'
 

@@ -179,18 +179,11 @@ class MessagesController < ApplicationController
           send_message_request(msisdn[-11,11])
         end
       end
-<<<<<<< HEAD
-=end  
-      @spreadsheet = Roo::Spreadsheet.open(@subscribers_file.path).sheet(0)
-      i = 1
-      last_row = @spreadsheet.last_row
-=======
 =end
       @spreadsheet = Roo::Spreadsheet.open(@subscribers_file.tempfile, extension: :xlsx).sheet(0)
       puts "sheet opened"
       i = 1
       last_row = @spreadsheet.last_row + 1
->>>>>>> 40284c1a15d76e9579bf75e80f382230b3918ede
       while i < last_row
         msisdn = @spreadsheet.cell(i,1).to_s
         unless not_a_number?(msisdn) or msisdn.length < 11
