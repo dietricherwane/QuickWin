@@ -1,5 +1,6 @@
 class MessagesController < ApplicationController
   include MessagesHelper
+  require 'roo'
 
   before_action :init_messages, only: [:send_message]
   prepend_before_filter :authenticate_user!, only: [:new, :send_message]
@@ -169,12 +170,24 @@ class MessagesController < ApplicationController
 
   def deliver_message_to_excel_list
     #Thread.new do
+=begin
       @spreadsheet = Spreadsheet.open(@subscribers_file.path).worksheet(0)
       @spreadsheet.each do |row|
         msisdn = row[0].to_s
         unless not_a_number?(msisdn) or msisdn.length < 11
           send_message_request(msisdn[-11,11])
         end
+      end
+=end  
+      @spreadsheet = Roo::Spreadsheet.open(@subscribers_file.path).sheet(0)
+      i = 1
+      last_row = @spreadsheet.last_row
+      while i < last_row
+        msisdn = @spreadsheet.cell(i,1).to_s
+        unless not_a_number?(msisdn) or msisdn.length < 11
+          send_message_request(msisdn[-11,11])
+        end
+        i += 1
       end
       @transaction.update_attributes(ended_at: DateTime.now, send_messages: @sent_messages, failed_messages: @failed_messages, number_of_messages: (@sent_messages + @failed_messages))
       if (ActiveRecord::Base.connection && ActiveRecord::Base.connection.active?)
